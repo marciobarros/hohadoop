@@ -29,13 +29,17 @@ public class ProductReader extends DynamoReader
 				title = titleHash.get("en");
 
 			List<String> tags = getListEntry("Tags");
+			List<String> categories = getListEntry("Categorias");
 			
-			if (title != null && tags.size() > 1)
+			if (title != null && tags.size() > 1 && categories.size() > 0)
 			{			
 				Product product = market.addProduct(id, title);
 				
 				for (String tag : tags)
 					product.addTag(tag.toLowerCase());
+				
+				for (String category : categories)
+					product.addCategory(category.toLowerCase());
 			}
 		}
 
