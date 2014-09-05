@@ -2,6 +2,7 @@ package org.hadoop.calc;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +40,12 @@ public class ComputeCloseProducts
 				result.add(proximity);
 		}
 
+		saveProximities(result);
+		return result;
+	}
+
+	private void saveProximities(List<ProductProximity> result) throws IOException 
+	{
 		File logFile = new File("saida.txt");
 		PrintWriter writer = new PrintWriter(new FileWriter(logFile));
 
@@ -53,6 +60,5 @@ public class ComputeCloseProducts
 		}
 		
 		writer.close();
-		return result;
 	}
 }

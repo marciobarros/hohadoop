@@ -2,7 +2,6 @@ package org.hadoop;
 
 import java.util.List;
 
-import org.hadoop.calc.ComputeCloseProducts;
 import org.hadoop.model.Market;
 import org.hadoop.model.Product;
 import org.hadoop.readers.ProductReader;
@@ -49,11 +48,16 @@ public class MainProgram
 	/**
 	 * Apresenta estatísticas básicas sobre os dados
 	 */
-	public static void showStatistics(Market market, List<String> dictionary)
+	public static void showStatistics(Market market)
 	{
 		System.out.println(market.countUsers() + " users in the market.");
 		System.out.println(market.countProducts() + " products in the market.");
-		System.out.println(dictionary.size() + " terms in the dictionary.");
+
+		List<String> allTags = market.getAllTags();
+		System.out.println(allTags.size() + " tags in the dictionary.");
+
+		List<String> allCategories = market.getAllCategories();
+		System.out.println(allCategories.size() + " categories in the product base.");
 	}
 	
 	/**
@@ -74,15 +78,12 @@ public class MainProgram
 //		System.out.println("Loading ratings ...");
 //		new RatingReader().execute(DIRECTORY + "f2e6b2bd-2678-4667-a87e-ac7a310d8b6e_000000", market);
 
-//		System.out.println("Building dictionary ...");
-//		List<String> dictionary = new DictionaryBuilder().execute(market);
-
 //		System.out.println("Building user tags ...");
 //		market.buildUserTags();
 
-		new ComputeCloseProducts().execute(market);
+//		new ComputeCloseProducts().execute(market);
 		
-		//showStatistics(market, dictionary);
+		showStatistics(market);
 		//testSingleTerms(market, dictionary);
 		
 		System.out.println("Free memory (Kb): " + Runtime.getRuntime().freeMemory() / 1024);

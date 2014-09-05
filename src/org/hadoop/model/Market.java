@@ -124,18 +124,33 @@ public class Market
 	}
 	
 	/**
-	 * Constrói o dicionário dos produtos
+	 * Constrói a lista com todas as tags dos produtos
 	 */
-	public List<String> buildDictionary(Market market)
+	public List<String> getAllTags()
 	{
-		List<String> dictionary = new ArrayList<String>();
+		List<String> tags = new ArrayList<String>();
 		
-		for (Product product : market.getProducts())
+		for (Product product : products)
 			for (String tag : product.getTags())
-				if (!dictionary.contains(tag))
-					dictionary.add(tag);
+				if (!tags.contains(tag))
+					tags.add(tag);
 		
-		return dictionary;
+		return tags;
+	}
+	
+	/**
+	 * Constrói a lista com todas as categorias dos produtos
+	 */
+	public List<String> getAllCategories()
+	{
+		List<String> categories = new ArrayList<String>();
+		
+		for (Product product : products)
+			for (String category : product.getCategories())
+				if (!categories.contains(category))
+					categories.add(category);
+		
+		return categories;
 	}
 
 	/**

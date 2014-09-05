@@ -15,6 +15,7 @@ public class Product
 	private @Getter String id;
 	private @Getter String title;
 	private List<String> tags;
+	private List<String> categories;
 
 	/**
 	 * Inicializa o produto
@@ -24,6 +25,7 @@ public class Product
 		this.id = id;
 		this.title = title;
 		this.tags = new ArrayList<String>();
+		this.categories = new ArrayList<String>();
 	}
 
 	/**
@@ -70,6 +72,54 @@ public class Product
 		
 		for (int i = 1; i < tags.size(); i++)
 			result += ", " + tags.get(i);
+		
+		return "[" + result + "]";
+	}
+
+	/**
+	 * Adiciona uma categoria ao produto
+	 */
+	public void addCategory(String category)
+	{
+		categories.add(category);
+	}
+	
+	/**
+	 * Retorna todas as categorias do produto
+	 */
+	public Iterable<String> getCategories()
+	{
+		return categories;
+	}
+
+	/**
+	 * Verifica se o produto contém uma categoria
+	 */
+	public boolean containsCategory(String category)
+	{
+		return categories.contains(category);
+	}
+
+	/**
+	 * Conta o número de categorias do produto
+	 */
+	public int countCategories()
+	{
+		return categories.size();
+	}
+
+	/**
+	 * Retorna as categorias como uma string
+	 */
+	public String getCategoriesAsString() 
+	{
+		if (categories.size() == 0)
+			return "[]";
+		
+		String result = categories.get(0);
+		
+		for (int i = 1; i < categories.size(); i++)
+			result += ", " + categories.get(i);
 		
 		return "[" + result + "]";
 	}
