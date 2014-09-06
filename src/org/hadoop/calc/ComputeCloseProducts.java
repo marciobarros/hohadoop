@@ -1,17 +1,12 @@
 package org.hadoop.calc;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.hadoop.model.Market;
 import org.hadoop.model.Product;
 import org.hadoop.model.ProductProximity;
+import org.hadoop.writers.ProductProximityWriter;
 
 public class ComputeCloseProducts 
 {
@@ -23,7 +18,7 @@ public class ComputeCloseProducts
 		for (Product product : allProducts)
 			processProduct(product, allProducts, result);
 
-		saveProximities(result);
+		new ProductProximityWriter().execute("saida.txt", result);
 		return result;
 	}
 
@@ -40,7 +35,7 @@ public class ComputeCloseProducts
 				processProduct(product, categoryProducts, result);
 		}
 		
-		saveProximities(result);
+		new ProductProximityWriter().execute("saida.txt", result);
 		return result;
 	}
 	
@@ -73,31 +68,5 @@ public class ComputeCloseProducts
 				return proximity;
 		
 		return null;
-	}
-
-	private void saveProximities(List<ProductProximity> result) throws IOException 
-	{
-		File logFile = new File("saida.txt");
-		PrintWriter writer = new PrintWriter(new FileWriter(logFile));
-		NumberFormat nf2 = new DecimalFormat("0.00");
-
-		for (ProductProximity proximity : result)
-		{
-			if (proximity.countCloseProducts() > 0)
-			{
-				Product product = proximity.getProduct();
-				writer.println("PROD\t" + product.getId() + "\t" + product.getTitle()/* + " " + product.getTagsAsString()*/);
-				
-				for (int i = 0; i < proximity.countCloseProducts(); i++)
-				{
-					Product closeProduct = proximity.getCloseProductIndex(i);
-					writer.println(nf2.format(proximity.getDistanceIndex(i)) + "\t" + closeProduct.getId() + "\t" + closeProduct.getTitle()/* + " " + closeProduct.getTagsAsString()*/);
-				}
-	
-				writer.println();
-			}
-		}
-		
-		writer.close();
 	}
 }
