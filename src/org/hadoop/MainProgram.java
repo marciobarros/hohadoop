@@ -3,50 +3,21 @@ package org.hadoop;
 import java.util.Date;
 import java.util.List;
 
-import org.hadoop.calc.ComputeCloseProducts;
+import org.hadoop.calc.ProximityComparator;
 import org.hadoop.model.Market;
-import org.hadoop.model.Product;
+import org.hadoop.model.ProductProximity;
+import org.hadoop.readers.ProductProximityReader;
 import org.hadoop.readers.ProductReader;
 
 /**
- * Tipos de análise
- * 
- * - em média temos 7.8 termos por usuário
- * 
- * - usuário x produto: lista de produtos recomendados para o usuário
- * 
- * - 38k produtos e 226k usuários
- * 
+ * Programa principal
  * 
  * @author marcio.barros
  */
 public class MainProgram
 {
-	//private static final String DIRECTORY = "\\Users\\marcio.barros\\Desktop\\hadoop\\";	
 	private static final String DIRECTORY = "data\\";
 	
-	/**
-	 * Localiza termos usados em apenas um produto - já foi rodado, mas nenhum termo foi encontrado
-	 */
-	public static void testSingleTerms(Market market, List<String> dictionary)
-	{
-		int singleTerms = 0;
-		
-		for (String term : dictionary)
-		{
-			int references = 0;
-			
-			for (Product product : market.getProducts())
-				if (product.containsTag(term))
-					references++;
-			
-			if (references == 0)
-				singleTerms++;
-		}
-		
-		System.out.println(singleTerms + " single terms found in the dictionary.");
-	}
-
 	/**
 	 * Apresenta estatísticas básicas sobre os dados
 	 */
@@ -60,6 +31,22 @@ public class MainProgram
 
 		List<String> allCategories = market.getAllCategories();
 		System.out.println(allCategories.size() + " categories in the product base.");
+	}
+
+	/**
+	 * Compara as proximidades calculadas com e sem categorias
+	 */
+	private static void compareProximityAccordingCategory(Market market) throws Exception 
+	{
+		System.out.println("Loading proximity without categories ...");
+		List<ProductProximity> withoutCategories = new ProductProximityReader().execute("results\\saida - sem categorias.txt", market);
+
+		System.out.println("Loading proximity with categories ...");
+		List<ProductProximity> withCategories = new ProductProximityReader().execute("results\\saida - com categorias.txt", market);
+		
+		System.out.println("Comparing proximities with and without categories ...");
+		double perc = new ProximityComparator().execute(withoutCategories, withCategories);
+		System.out.println(perc + "% produtos foram considerados com as categorias");
 	}
 	
 	/**
@@ -84,10 +71,9 @@ public class MainProgram
 //		System.out.println("Building user tags ...");
 //		market.buildUserTags();
 
-		new ComputeCloseProducts().executeCategories(market);
-		
-		//showStatistics(market);
-		//testSingleTerms(market, dictionary);
+//		showStatistics(market);
+//		new ComputeCloseProducts().executeCategories(market);
+		compareProximityAccordingCategory(market);
 		
 		long finishTime = new Date().getTime();
 		System.out.println("Free memory (Kb): " + Runtime.getRuntime().freeMemory() / 1024);

@@ -12,6 +12,8 @@ import lombok.Getter;
  */
 public class ProductProximity
 {
+	private static final int MAX_CLOSE_PRODUCTS = 10; 
+	
 	private @Getter Product product;	
 	private List<CloseProduct> closeProducts;
 
@@ -57,13 +59,13 @@ public class ProductProximity
 		
 		if (distance > greaterDistance)
 		{
-			if (len < 10)
+			if (len < MAX_CLOSE_PRODUCTS)
 				closeProducts.add(new CloseProduct(product, distance));
 
 			return;
 		}
 		
-		if (len == 10)
+		if (len == MAX_CLOSE_PRODUCTS)
 			closeProducts.remove(--len);
 		
 		for (int i = 0; i < len; i++)
