@@ -1,7 +1,9 @@
 package org.hadoop;
 
+import java.util.Date;
 import java.util.List;
 
+import org.hadoop.calc.ComputeCloseProducts;
 import org.hadoop.model.Market;
 import org.hadoop.model.Product;
 import org.hadoop.readers.ProductReader;
@@ -66,7 +68,8 @@ public class MainProgram
 	public static void main(String[] args) throws Exception
 	{
 		System.out.println("Free memory (Kb): " + Runtime.getRuntime().freeMemory() / 1024);
-
+		long startTime = new Date().getTime();
+		
 		Market market = new Market();
 
 //		System.out.println("Loading users ...");
@@ -81,11 +84,13 @@ public class MainProgram
 //		System.out.println("Building user tags ...");
 //		market.buildUserTags();
 
-//		new ComputeCloseProducts().execute(market);
+		new ComputeCloseProducts().executeCategories(market);
 		
-		showStatistics(market);
+		//showStatistics(market);
 		//testSingleTerms(market, dictionary);
 		
+		long finishTime = new Date().getTime();
 		System.out.println("Free memory (Kb): " + Runtime.getRuntime().freeMemory() / 1024);
+		System.out.println("Total time (seg): " + (finishTime - startTime) / 1000);
 	}
 }

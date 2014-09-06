@@ -185,4 +185,18 @@ public class Market
 					
 		return ((double) count) / users.size();
 	}
+
+	/**
+	 * Retorna todos os produtos de uma categoria
+	 */
+	public Iterable<Product> getProductsForCategory(String category)
+	{
+		List<Product> result = new ArrayList<Product>();
+		
+		for (Product product : products)
+			if (product.containsCategory(category))
+				result.add(product);
+		
+		return result;
+	}
 }

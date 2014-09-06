@@ -26,6 +26,22 @@ public class ProductProximity
 			return;
 		}
 		
+		for (int i = 0; i < len; i++)
+		{
+			WeightedProduct w = closeProducts.get(i);
+			
+			if (w.getProduct() == product)
+			{
+				if (w.getDistance() > distance)
+				{
+					closeProducts.remove(i);
+					break;
+				}
+				else
+					return;
+			}
+		}
+		
 		double greaterDistance = closeProducts.get(len-1).getDistance();
 		
 		if (distance > greaterDistance)
