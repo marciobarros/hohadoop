@@ -93,6 +93,20 @@ public class Market
 	}
 
 	/**
+	 * Retorna o número de produtos de uma categoria
+	 */
+	public int countProductsForCategory(String category)
+	{
+		int count = 0;
+		
+		for (Product product : products)
+			if (product.containsCategory(category))
+				count++;
+
+		return count;
+	}
+
+	/**
 	 * Retorna um produto, dado seu índice
 	 */
 	public Product getProductByIndex(int index) 
