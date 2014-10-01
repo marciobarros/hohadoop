@@ -1,4 +1,4 @@
-package org.hadoop.readers;
+package br.unirio.dsw.hadoop.ho.reader;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -7,9 +7,9 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hadoop.model.Market;
-import org.hadoop.model.Product;
-import org.hadoop.model.ProductProximity;
+import br.unirio.dsw.hadoop.ho.model.Market;
+import br.unirio.dsw.hadoop.ho.model.Product;
+import br.unirio.dsw.hadoop.ho.model.ProductProximity;
 
 /**
  * Classe responsável por carregar um arquivo de arquivos próximos

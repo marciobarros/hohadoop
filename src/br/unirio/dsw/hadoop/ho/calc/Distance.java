@@ -1,8 +1,8 @@
-package org.hadoop.calc;
+package br.unirio.dsw.hadoop.ho.calc;
 
-import org.hadoop.model.Product;
-import org.hadoop.model.User;
-import org.hadoop.model.UserTag;
+import br.unirio.dsw.hadoop.ho.model.Product;
+import br.unirio.dsw.hadoop.ho.model.User;
+import br.unirio.dsw.hadoop.ho.model.UserTag;
 
 /**
  * Classes para cálculo de distância entre elementos

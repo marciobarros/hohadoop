@@ -1,4 +1,4 @@
-package org.hadoop.writers;
+package br.unirio.dsw.hadoop.ho.writer;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -8,8 +8,8 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.List;
 
-import org.hadoop.model.Product;
-import org.hadoop.model.ProductProximity;
+import br.unirio.dsw.hadoop.ho.model.Product;
+import br.unirio.dsw.hadoop.ho.model.ProductProximity;
 
 /**
  * Salva um arquivo de produtos próximos a produtos

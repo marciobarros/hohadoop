@@ -1,6 +1,6 @@
-package org.hadoop.readers;
+package br.unirio.dsw.hadoop.ho.reader;
 
-import org.hadoop.model.Market;
+import br.unirio.dsw.hadoop.ho.model.Market;
 
 /**
  * Classe responsável pela leitura do arquivo de usuários

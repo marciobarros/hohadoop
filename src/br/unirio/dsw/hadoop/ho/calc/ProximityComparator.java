@@ -1,9 +1,9 @@
-package org.hadoop.calc;
+package br.unirio.dsw.hadoop.ho.calc;
 
 import java.util.List;
 
-import org.hadoop.model.Product;
-import org.hadoop.model.ProductProximity;
+import br.unirio.dsw.hadoop.ho.model.Product;
+import br.unirio.dsw.hadoop.ho.model.ProductProximity;
 
 /**
  * Classe que compara duas listas de produtos próximos a produtos, com e sem categorias

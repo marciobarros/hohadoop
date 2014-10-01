@@ -1,4 +1,4 @@
-package org.hadoop.readers;
+package br.unirio.dsw.hadoop.ho.reader;
 
 import java.util.ArrayList;
 import java.util.List;

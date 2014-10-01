@@ -1,9 +1,9 @@
-package org.hadoop.readers;
+package br.unirio.dsw.hadoop.ho.reader;
 
-import org.hadoop.model.Market;
-import org.hadoop.model.Product;
-import org.hadoop.model.RatingType;
-import org.hadoop.model.User;
+import br.unirio.dsw.hadoop.ho.model.Market;
+import br.unirio.dsw.hadoop.ho.model.Product;
+import br.unirio.dsw.hadoop.ho.model.RatingType;
+import br.unirio.dsw.hadoop.ho.model.User;
 
 /**
  * Classe responsável pela leitura do arquivo de rating de produtos por usuários

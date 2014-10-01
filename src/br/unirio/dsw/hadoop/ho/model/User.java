@@ -1,4 +1,4 @@
-package org.hadoop.model;
+package br.unirio.dsw.hadoop.ho.model;
 
 import java.util.ArrayList;
 import java.util.List;

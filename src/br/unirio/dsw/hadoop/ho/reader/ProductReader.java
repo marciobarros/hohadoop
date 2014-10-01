@@ -1,10 +1,10 @@
-package org.hadoop.readers;
+package br.unirio.dsw.hadoop.ho.reader;
 
 import java.util.HashMap;
 import java.util.List;
 
-import org.hadoop.model.Market;
-import org.hadoop.model.Product;
+import br.unirio.dsw.hadoop.ho.model.Market;
+import br.unirio.dsw.hadoop.ho.model.Product;
 
 /**
  * Classe responsável pela leitura do arquivo de produtos

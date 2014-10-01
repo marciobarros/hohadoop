@@ -1,57 +1,20 @@
-package org.hadoop;
+package br.unirio.dsw.hadoop.ho.main;
 
 import java.util.Date;
 import java.util.List;
 
-import org.hadoop.calc.ProximityComparator;
-import org.hadoop.model.Market;
-import org.hadoop.model.ProductProximity;
-import org.hadoop.readers.ProductProximityReader;
-import org.hadoop.readers.ProductReader;
+import br.unirio.dsw.hadoop.ho.model.Market;
+import br.unirio.dsw.hadoop.ho.reader.ProductReader;
+import br.unirio.dsw.hadoop.ho.reader.RatingReader;
+import br.unirio.dsw.hadoop.ho.reader.UserReader;
 
 /**
- * Programa principal
+ * Programa principal para publicar dados sobre a base de produtos e usuários
  * 
  * @author marcio.barros
  */
-public class MainProgram
+public class MainStatistics
 {
-	private static final String DIRECTORY = "data\\";
-	
-	/**
-	 * Apresenta estatísticas básicas sobre os dados
-	 */
-	public static void showStatistics(Market market)
-	{
-		System.out.println(market.countUsers() + " users in the market.");
-		System.out.println(market.countProducts() + " products in the market.");
-
-		List<String> allTags = market.getAllTags();
-		System.out.println(allTags.size() + " tags in the dictionary.");
-
-		List<String> allCategories = market.getAllCategories();
-		System.out.println(allCategories.size() + " categories in the product base.");
-	}
-
-	/**
-	 * Compara as proximidades calculadas com e sem categorias
-	 */
-	private static void compareProximityAccordingCategory(Market market) throws Exception 
-	{
-		System.out.println("Loading proximity without categories ...");
-		List<ProductProximity> withoutCategories = new ProductProximityReader().execute("results\\saida - sem categorias.txt", market);
-
-		System.out.println("Loading proximity with categories ...");
-		List<ProductProximity> withCategories = new ProductProximityReader().execute("results\\saida - com categorias.txt", market);
-		
-		System.out.println("Comparing proximities with and without categories ...");
-		double perc = new ProximityComparator().execute(withoutCategories, withCategories);
-		System.out.println(perc + "% produtos foram considerados com as categorias");
-	}
-	
-	/**
-	 * Programa principal
-	 */
 	public static void main(String[] args) throws Exception
 	{
 		System.out.println("Free memory (Kb): " + Runtime.getRuntime().freeMemory() / 1024);
@@ -59,21 +22,22 @@ public class MainProgram
 		
 		Market market = new Market();
 
-//		System.out.println("Loading users ...");
-//		new UserReader().execute(DIRECTORY + "57c30a12-dde8-4858-8510-08a01ac6acf4_000000", market);
+		System.out.println("Loading users ...");
+		new UserReader().execute(Constants.RAW_DATA_DIRECTORY + "57c30a12-dde8-4858-8510-08a01ac6acf4_000000", market);
+		System.out.println(market.countUsers() + " users in the market.");
 
 		System.out.println("Loading products ...");
-		new ProductReader().execute(DIRECTORY + "83594614-bacf-40c9-ac0c-238699b53106_000000", market);
+		new ProductReader().execute(Constants.RAW_DATA_DIRECTORY + "83594614-bacf-40c9-ac0c-238699b53106_000000", market);
+		System.out.println(market.countProducts() + " products in the market.");
 
-//		System.out.println("Loading ratings ...");
-//		new RatingReader().execute(DIRECTORY + "f2e6b2bd-2678-4667-a87e-ac7a310d8b6e_000000", market);
+		System.out.println("Loading ratings ...");
+		new RatingReader().execute(Constants.RAW_DATA_DIRECTORY + "f2e6b2bd-2678-4667-a87e-ac7a310d8b6e_000000", market);
 
-//		System.out.println("Building user tags ...");
-//		market.buildUserTags();
+		List<String> allTags = market.getAllTags();
+		System.out.println(allTags.size() + " tags in the dictionary.");
 
-//		showStatistics(market);
-//		new ComputeCloseProducts().executeCategories(market);
-		compareProximityAccordingCategory(market);
+		List<String> allCategories = market.getAllCategories();
+		System.out.println(allCategories.size() + " categories in the product base.");
 		
 		long finishTime = new Date().getTime();
 		System.out.println("Free memory (Kb): " + Runtime.getRuntime().freeMemory() / 1024);
