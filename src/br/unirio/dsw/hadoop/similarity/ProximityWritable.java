@@ -54,25 +54,4 @@ public class ProximityWritable implements Writable/*Comparable*/
 		out.writeUTF(productId);
 		out.writeDouble(proximity);
 	}
-
-	/*@Override
-	public int compareTo(Object o)
-	{
-        ProximityWritable t = (ProximityWritable) o;
-        
-        int res = productId.compareTo(t.getProductId());
-        
-        if (res != 0)
-        	return res;
-        
-        double diff = proximity - t.getProximity();
-        
-        if (diff > 0.001)
-        	return 1;
-        
-        if (diff < -0.001)
-        	return -1;
-        
-		return 0;
-	}*/
 }

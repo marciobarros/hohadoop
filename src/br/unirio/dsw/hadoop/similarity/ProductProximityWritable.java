@@ -57,13 +57,6 @@ public class ProductProximityWritable implements Writable/*Comparable*/
 		out.writeUTF(toString() + "\n");
 	}
 
-	/*@Override
-	public int compareTo(Object o)
-	{
-        ProductProximityWritable t = (ProductProximityWritable) o;
-        return t.compareTo(proximity);
-	}*/
-
 	/**
 	 * Escreve a lista de produtos próximos em uma string
 	 */
