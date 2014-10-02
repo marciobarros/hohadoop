@@ -23,15 +23,16 @@ public class ProximityWritable implements WritableComparable
 	@Override
 	public void readFields(DataInput in) throws IOException
 	{
-		this.productId = in.readLine();
-		this.proximity = in.readDouble();
+		String s = in.readLine();
+		String[] tokens = s.split(",");
+		this.productId = tokens[0];
+		this.proximity = Double.parseDouble(tokens[1]);
 	}
 
 	@Override
 	public void write(DataOutput out) throws IOException
 	{
-		out.writeChars(productId);
-		out.writeDouble(proximity);
+		out.writeChars(productId + "," + proximity);
 	}
 
 	@Override
