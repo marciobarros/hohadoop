@@ -28,7 +28,7 @@ public class ComputeCloseProducts
 		for (Product product : allProducts)
 			processProduct(product, allProducts, result);
 
-		new ProductProximityWriter().execute(filename, result);
+		new ProductProximityWriter().execute(filename, result, market);
 		return result;
 	}
 
@@ -48,7 +48,7 @@ public class ComputeCloseProducts
 				processProduct(product, categoryProducts, result);
 		}
 		
-		new ProductProximityWriter().execute(filename, result);
+		new ProductProximityWriter().execute(filename, result, market);
 		return result;
 	}
 	
@@ -61,7 +61,7 @@ public class ComputeCloseProducts
 		
 		if (proximity == null)
 		{
-			proximity = new ProductProximity(product);
+			proximity = new ProductProximity(product.getId());
 			result.add(proximity);
 		}
 
@@ -72,7 +72,7 @@ public class ComputeCloseProducts
 				double distance = Distance.jaccardProductProductDistance(product, relatedProduct);
 				
 				if (distance < MIN_PROXIMITY_THRESHOLD)
-					proximity.add(relatedProduct, distance);
+					proximity.add(relatedProduct.getId(), distance);
 			}
 		}
 	}
@@ -83,7 +83,7 @@ public class ComputeCloseProducts
 	private ProductProximity getProductProximity(Product product, List<ProductProximity> result)
 	{
 		for (ProductProximity proximity : result)
-			if (proximity.getProduct() == product)
+			if (proximity.getProductId().compareTo(product.getId()) == 0)
 				return proximity;
 		
 		return null;

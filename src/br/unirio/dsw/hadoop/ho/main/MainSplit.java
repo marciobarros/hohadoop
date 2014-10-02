@@ -3,7 +3,7 @@ package br.unirio.dsw.hadoop.ho.main;
 import java.util.Date;
 
 import br.unirio.dsw.hadoop.ho.model.Market;
-import br.unirio.dsw.hadoop.ho.reader.ProductReader;
+import br.unirio.dsw.hadoop.ho.reader.dynamo.ProductReader;
 import br.unirio.dsw.hadoop.ho.writer.ProductCategorySplitter;
 
 /**

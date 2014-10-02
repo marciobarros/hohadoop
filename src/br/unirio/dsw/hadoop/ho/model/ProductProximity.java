@@ -14,28 +14,28 @@ public class ProductProximity
 {
 	private static final int MAX_CLOSE_PRODUCTS = 10; 
 	
-	private @Getter Product product;	
+	private @Getter String productId;	
 	private List<CloseProduct> closeProducts;
 
 	/**
 	 * Inicializa a lista de produtos próximos a um produto
 	 */
-	public ProductProximity(Product product)
+	public ProductProximity(String productId)
 	{
-		this.product = product;
+		this.productId = productId;
 		this.closeProducts = new ArrayList<CloseProduct>();
 	}
 	
 	/**
 	 * Adiciona um produto próximo ao produto base da lista
 	 */
-	public void add(Product product, double distance)
+	public void add(String productId, double distance)
 	{
 		int len = closeProducts.size();
 		
 		if (len == 0)
 		{
-			closeProducts.add(new CloseProduct(product, distance));
+			closeProducts.add(new CloseProduct(productId, distance));
 			return;
 		}
 		
@@ -43,7 +43,7 @@ public class ProductProximity
 		{
 			CloseProduct w = closeProducts.get(i);
 			
-			if (w.getProduct() == product)
+			if (w.getProductId().compareTo(productId) == 0)
 			{
 				if (w.getDistance() > distance)
 				{
@@ -60,7 +60,7 @@ public class ProductProximity
 		if (distance > greaterDistance)
 		{
 			if (len < MAX_CLOSE_PRODUCTS)
-				closeProducts.add(new CloseProduct(product, distance));
+				closeProducts.add(new CloseProduct(productId, distance));
 
 			return;
 		}
@@ -71,11 +71,11 @@ public class ProductProximity
 		for (int i = 0; i < len; i++)
 			if (distance < closeProducts.get(i).getDistance())
 			{
-				closeProducts.add(i, new CloseProduct(product, distance));
+				closeProducts.add(i, new CloseProduct(productId, distance));
 				return;
 			}
 
-		closeProducts.add(new CloseProduct(product, distance));
+		closeProducts.add(new CloseProduct(productId, distance));
 	}
 	
 	/**
@@ -89,9 +89,9 @@ public class ProductProximity
 	/**
 	 * Retorna um produto próximo ao produto base, dado seu índice
 	 */
-	public Product getCloseProductIndex(int index)
+	public String getCloseProductIndex(int index)
 	{
-		return closeProducts.get(index).getProduct();
+		return closeProducts.get(index).getProductId();
 	}
 	
 	/**
@@ -110,12 +110,12 @@ public class ProductProximity
  */
 class CloseProduct
 {
-	private @Getter Product product;
+	private @Getter String productId;
 	private @Getter double distance;
 	
-	public CloseProduct(Product product, double distance)
+	public CloseProduct(String productId, double distance)
 	{
-		this.product = product;
+		this.productId = productId;
 		this.distance = distance;
 	}
 }

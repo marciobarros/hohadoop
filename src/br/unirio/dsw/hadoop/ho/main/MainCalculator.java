@@ -4,7 +4,7 @@ import java.util.Date;
 
 import br.unirio.dsw.hadoop.ho.calc.ComputeCloseProducts;
 import br.unirio.dsw.hadoop.ho.model.Market;
-import br.unirio.dsw.hadoop.ho.reader.ProductReader;
+import br.unirio.dsw.hadoop.ho.reader.dynamo.ProductReader;
 
 /**
  * Programa principal para calcular os arquivos de produtos próximos a outros produtos

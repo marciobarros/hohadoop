@@ -48,6 +48,22 @@ public class Distance
 		int tagCount1 = product1.countTags();
 		int tagCount2 = product2.countTags();
 		int union = tagCount1 + tagCount2 - intersection;
+		return (union == 0) ? 1.0 : 1.0 - ((double)intersection) / union;
+	}
+
+	/**
+	 * Calcula a distância entre dois produtos pelo método Jaccard (varia de 0 a 1)
+	 */
+	public static double jaccardProductProductDistance(Product product, String[] tags)
+	{
+		int intersection = 0;
+		
+		for (String tag : tags)
+			if (product.containsTag(tag))
+				intersection++;
+		
+		int tagCountProduct = product.countTags();
+		int union = tags.length + tagCountProduct - intersection;
 		
 		return (union == 0) ? 1.0 : 1.0 - ((double)intersection) / union;
 	}

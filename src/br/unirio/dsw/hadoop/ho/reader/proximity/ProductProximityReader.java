@@ -1,4 +1,4 @@
-package br.unirio.dsw.hadoop.ho.reader;
+package br.unirio.dsw.hadoop.ho.reader.proximity;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -56,7 +56,7 @@ public class ProductProximityReader
 		if (product == null)
 			throw new Exception("Formato de linha de produto inválido: produto não identificado (" + tokens[1] + ")");
 			
-		ProductProximity proximity = new ProductProximity(product);
+		ProductProximity proximity = new ProductProximity(product.getId());
 		results.add(proximity);
 			
 		while ((line = reader.readLine()) != null && line.length() > 0)
@@ -79,6 +79,6 @@ public class ProductProximityReader
 		if (closeProduct == null)
 			throw new Exception("Formato de detalhe de produto inválido: produto não identificado (" + tokens[1] + ")");
 			
-		proximity.add(closeProduct, distance);
+		proximity.add(closeProduct.getId(), distance);
 	}
 }

@@ -8,6 +8,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.List;
 
+import br.unirio.dsw.hadoop.ho.model.Market;
 import br.unirio.dsw.hadoop.ho.model.Product;
 import br.unirio.dsw.hadoop.ho.model.ProductProximity;
 
@@ -21,7 +22,7 @@ public class ProductProximityWriter
 	/**
 	 * Salva uma lista de produtos próximos a outros produtos
 	 */
-	public void execute(String filename, List<ProductProximity> result) throws IOException 
+	public void execute(String filename, List<ProductProximity> result, Market market) throws IOException 
 	{
 		File logFile = new File(filename);
 		PrintWriter writer = new PrintWriter(new FileWriter(logFile));
@@ -31,7 +32,7 @@ public class ProductProximityWriter
 		{
 			if (proximity.countCloseProducts() > 0)
 			{
-				saveProduct(writer, nf2, proximity);
+				saveProduct(writer, nf2, proximity, market);
 			}
 		}
 		
@@ -41,17 +42,25 @@ public class ProductProximityWriter
 	/**
 	 * Salva os produtos próximos a um determinado produto
 	 */
-	private void saveProduct(PrintWriter writer, NumberFormat nf2, ProductProximity proximity)
+	private void saveProduct(PrintWriter writer, NumberFormat nf2, ProductProximity proximity, Market market)
 	{
-		Product product = proximity.getProduct();
-		writer.println("PROD\t" + product.getId() + "\t" + product.getTitle());
+		String productId = proximity.getProductId();
+		Product product = market.getProductById(productId);
 		
-		for (int i = 0; i < proximity.countCloseProducts(); i++)
+		if (product != null)
 		{
-			Product closeProduct = proximity.getCloseProductIndex(i);
-			writer.println(nf2.format(proximity.getDistanceIndex(i)) + "\t" + closeProduct.getId() + "\t" + closeProduct.getTitle());
-		}
+			writer.println("PROD\t" + product.getId() + "\t" + product.getTitle());
+			
+			for (int i = 0; i < proximity.countCloseProducts(); i++)
+			{
+				String closeProductId = proximity.getCloseProductIndex(i);
+				Product closeProduct = market.getProductById(closeProductId);
+				
+				if (closeProduct != null)
+					writer.println(nf2.format(proximity.getDistanceIndex(i)) + "\t" + closeProduct.getId() + "\t" + closeProduct.getTitle());
+			}
 
-		writer.println();
+			writer.println();
+		}
 	}
 }

@@ -4,9 +4,9 @@ import java.util.Date;
 import java.util.List;
 
 import br.unirio.dsw.hadoop.ho.model.Market;
-import br.unirio.dsw.hadoop.ho.reader.ProductReader;
-import br.unirio.dsw.hadoop.ho.reader.RatingReader;
-import br.unirio.dsw.hadoop.ho.reader.UserReader;
+import br.unirio.dsw.hadoop.ho.reader.dynamo.ProductReader;
+import br.unirio.dsw.hadoop.ho.reader.dynamo.RatingReader;
+import br.unirio.dsw.hadoop.ho.reader.dynamo.UserReader;
 
 /**
  * Programa principal para publicar dados sobre a base de produtos e usuários

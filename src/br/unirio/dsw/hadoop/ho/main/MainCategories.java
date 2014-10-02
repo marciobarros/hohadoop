@@ -6,8 +6,8 @@ import java.util.List;
 import br.unirio.dsw.hadoop.ho.calc.ProximityComparator;
 import br.unirio.dsw.hadoop.ho.model.Market;
 import br.unirio.dsw.hadoop.ho.model.ProductProximity;
-import br.unirio.dsw.hadoop.ho.reader.ProductProximityReader;
-import br.unirio.dsw.hadoop.ho.reader.ProductReader;
+import br.unirio.dsw.hadoop.ho.reader.dynamo.ProductReader;
+import br.unirio.dsw.hadoop.ho.reader.proximity.ProductProximityReader;
 
 /**
  * Programa principal para comparar o resultado da análise de produtos próximos sem categorias e com categorias

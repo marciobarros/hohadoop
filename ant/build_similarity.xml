@@ -1,8 +1,4 @@
-<project name="WCHadoop" default="distribute" basedir="..">
-    <description>
-        Simple JAR builder
-    </description>
-
+<project name="WCSimilarity" default="distribute" basedir="..">
 	<property name="src" location="src"/>
 	<property name="build" location="build"/>
 	
@@ -14,7 +10,7 @@
 	</target>
 	
 	<target name="compile" depends="init">
-		<javac srcdir="${src}" destdir="${build}/classes" excludes="org/hadoop/test/*.java" includeantruntime="true">
+		<javac srcdir="${src}" destdir="${build}/classes" excludes="org/hadoop/test/*.java" includeantruntime="true" encoding="iso-8859-1">
 		<classpath>
 			<pathelement path="${classpath}"/>
 			<pathelement location="/Program Files/eclipse/lombok.jar"/>
@@ -30,9 +26,9 @@
 		<copy file="lib/hadoop-annotations-2.5.1.jar" todir="${build}/classes/lib" />
 		<copy file="lib/hadoop-mapreduce-client-core-2.5.1.jar" todir="${build}/classes/lib" />
 				
-	    <jar jarfile="${build}/wchadoop.jar" basedir="${build}/classes">
+	    <jar jarfile="${build}/simhadoop.jar" basedir="${build}/classes">
             <manifest>
-                <attribute name="Main-Class" value="br.unirio.dsw.hadoop.wordcount.WordCount"/>
+                <attribute name="Main-Class" value="br.unirio.dsw.hadoop.similarity.SimilarityCalculation"/>
             </manifest>
 		</jar>
 		<delete dir="${build}/classes"/>

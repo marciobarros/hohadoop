@@ -1,4 +1,4 @@
-package br.unirio.dsw.hadoop.ho.reader;
+package br.unirio.dsw.hadoop.ho.reader.dynamo;
 
 import br.unirio.dsw.hadoop.ho.model.Market;
 

@@ -2,7 +2,6 @@ package br.unirio.dsw.hadoop.ho.calc;
 
 import java.util.List;
 
-import br.unirio.dsw.hadoop.ho.model.Product;
 import br.unirio.dsw.hadoop.ho.model.ProductProximity;
 
 /**
@@ -22,23 +21,23 @@ public class ProximityComparator
 		long similarProximitiesWith = 0;
 		
 		for (ProductProximity proximity : withoutCategories)
-			if (getProductProximity(proximity.getProduct(), withCategories) == null)
+			if (getProductProximity(proximity.getProductId(), withCategories) == null)
 				proximitiesWithout += proximity.countCloseProducts();
 		
 		for (ProductProximity proximityWith : withCategories)
 		{
-			ProductProximity proximityWithout = getProductProximity(proximityWith.getProduct(), withoutCategories);
+			ProductProximity proximityWithout = getProductProximity(proximityWith.getProductId(), withoutCategories);
 			
 			if (proximityWithout == null)
-				throw new Exception("Não encontrei o equivalente ao produto '" + proximityWith.getProduct().getId() + "' na classificação sem categorias");
+				throw new Exception("Não encontrei o equivalente ao produto '" + proximityWith.getProductId() + "' na classificação sem categorias");
 			
 			proximitiesWithout += proximityWithout.countCloseProducts();
 
 			for (int i = 0; i < proximityWithout.countCloseProducts(); i++)
 			{
-				Product product = proximityWithout.getCloseProductIndex(i);
+				String productId = proximityWithout.getCloseProductIndex(i);
 				double distanceWithout = proximityWithout.getDistanceIndex(i);
-				double distanceWith = getProductDistance(proximityWith, product);
+				double distanceWith = getProductDistance(proximityWith, productId);
 				double error = Math.abs(distanceWith - distanceWithout);
 				
 				if (error < 0.01)
@@ -52,10 +51,10 @@ public class ProximityComparator
 	/**
 	 * Retorna a lista de proximidades de um produto
 	 */
-	private ProductProximity getProductProximity(Product product, List<ProductProximity> result)
+	private ProductProximity getProductProximity(String productId, List<ProductProximity> result)
 	{
 		for (ProductProximity proximity : result)
-			if (proximity.getProduct() == product)
+			if (proximity.getProductId().compareTo(productId) == 0)
 				return proximity;
 		
 		return null;
@@ -64,10 +63,10 @@ public class ProximityComparator
 	/**
 	 * Retorna a distância de um produto em uma lista de proximidades
 	 */
-	private double getProductDistance(ProductProximity proximity, Product closeProduct)
+	private double getProductDistance(ProductProximity proximity, String closeProductId)
 	{
 		for (int i = 0; i < proximity.countCloseProducts(); i++)
-			if (proximity.getCloseProductIndex(i) == closeProduct)
+			if (proximity.getCloseProductIndex(i).compareTo(closeProductId) == 0)
 				return proximity.getDistanceIndex(i);
 		
 		return 1.0;
