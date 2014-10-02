@@ -10,6 +10,11 @@ import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
+/**
+ * Classe principal do processo Hadoop que calcula o número de vezes que uma palavra ocorre
+ * 
+ * @author Marcio Barros
+ */
 public class WordCount
 {
 	public static void main(String[] args) throws Exception

@@ -8,12 +8,13 @@ import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
+/**
+ * Mapper do processo Hadoop que calcula o número de vezes que uma palavra ocorre
+ * 
+ * @author Marcio Barros
+ */
 public class Map extends Mapper<LongWritable, Text, Text, IntWritable>
 {
-	private final static IntWritable one = new IntWritable(1);
-
-	private Text word = new Text();
-
 	/**
 	 * Processo de mapping
 	 */
@@ -29,7 +30,8 @@ public class Map extends Mapper<LongWritable, Text, Text, IntWritable>
 			
 			if (validWord(nextWord))
 			{
-				word.set(nextWord);
+				Text word = new Text(nextWord);
+				IntWritable one = new IntWritable(1);
 				context.write(word, one);
 			}
 		}

@@ -6,6 +6,11 @@ import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
+/**
+ * Reducer para um processo Hadoop que calcula o número de vezes que uma palavra ocorre
+ * 
+ * @author Marcio Barros
+ */
 public class Reduce extends Reducer<Text, IntWritable, Text, IntWritable>
 {
 	@Override

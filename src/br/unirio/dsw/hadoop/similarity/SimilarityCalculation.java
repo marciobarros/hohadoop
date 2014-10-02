@@ -9,6 +9,11 @@ import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
+/**
+ * Classe principal do processo Hadoop de cálculo de similaridade
+ * 
+ * @author Marcio Barros
+ */
 public class SimilarityCalculation
 {
 	public static void main(String[] args) throws Exception

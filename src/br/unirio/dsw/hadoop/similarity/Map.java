@@ -19,47 +19,66 @@ import br.unirio.dsw.hadoop.ho.calc.Distance;
 import br.unirio.dsw.hadoop.ho.model.Market;
 import br.unirio.dsw.hadoop.ho.model.Product;
 
+/**
+ * Classe que representa o mapper do processo Hadoop de cálculo de similaridade
+ * 
+ * @author Marcio Barros
+ */
 public class Map extends Mapper<LongWritable, Text, Text, ProximityWritable>
 {
+	/**
+	 * Distância máxima para ser considerado um produto próximo
+	 */
 	private final static double MIN_PROXIMITY_THRESHOLD = 0.5;
 
+	/**
+	 * Atributo que mantém a lista de produtos
+	 */
 	private Market market;
 
+	/**
+	 * Prepara o processo de mapping
+	 */
 	@Override
 	public void setup(Context context)
 	{
 		this.market = new Market();
-		
 		Configuration conf = context.getConfiguration();
 		String inputFile = ((FileSplit) context.getInputSplit()).getPath().toString();
-		System.err.println("Arquivo de produtos: " + inputFile);
+		loadProducts(conf, inputFile);
+	}
 
+	/**
+	 * Carrega o arquivo de produtos processado pelo mapping para realizar as comparações
+	 */
+	private void loadProducts(Configuration conf, String inputFile)
+	{
 		try
 		{
 			FileSystem fs = FileSystem.get(new URI("s3://hadoop-example-dsw"), conf);
 			Path path = new Path(inputFile.substring(23));
 			
-			if (fs.exists(path))
+			if (!fs.exists(path))
+				return;
+
+			FSDataInputStream fis = fs.open(path);
+			BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+			String line = null;
+
+			while ((line = br.readLine()) != null && line.trim().length() > 0)
 			{
-				FSDataInputStream fis = fs.open(path);
-				BufferedReader br = new BufferedReader(new InputStreamReader(fis));
-				String line = null;
-
-				while ((line = br.readLine()) != null && line.trim().length() > 0)
-				{
-					String[] tokens = line.split(",");
-					
-					if (tokens.length < 3)
-						throw new Exception("Formato de linha de produto inválido");
-					
-					Product product = market.addProduct(tokens[0], tokens[1]);
-					
-					for (int i = 2; i < tokens.length; i++)
-						product.addTag(tokens[i]);
-				}
-
-				br.close();
+				String[] tokens = line.split(",");
+				
+				if (tokens.length < 3)
+					throw new Exception("Formato de linha de produto inválido");
+				
+				Product product = market.addProduct(tokens[0], tokens[1]);
+				
+				for (int i = 2; i < tokens.length; i++)
+					product.addTag(tokens[i]);
 			}
+
+			br.close();
 			
 		} catch (Exception e)
 		{
@@ -67,20 +86,13 @@ public class Map extends Mapper<LongWritable, Text, Text, ProximityWritable>
 		}
 	}
 
-	private int counter = 0;
-	
 	/**
-	 * Processo de mapping
+	 * Gera uma lista de pares <produto, proximidade>, onde a proximidade é um par <produto, distancia>
 	 */
 	@Override
 	public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException
 	{
 		String[] tokens = value.toString().split(",");
-
-		System.err.println("Mapper com " + market.countProducts() + " produtos ...");
-		
-		if (counter++ % 1000 == 0)
-			System.err.println("Entrada: " + value.toString());
 
 		if (tokens.length < 3)
 		{
